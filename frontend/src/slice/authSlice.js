@@ -6,7 +6,6 @@ import { Navigate } from 'react-router-dom';
 export const signup = createAsyncThunk('auth/signup', async (userData, { rejectWithValue }) => {
   try {
     const response = await api.post('/api/users/signup', userData);
-    console.log(response)
     return response.data; 
   } catch (error) {
     if (error.response && error.response.data) {

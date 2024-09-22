@@ -27,8 +27,6 @@ function Signup() {
     const userData = { name, email, password };
 
     const action = await dispatch(signup(userData));
-    console.log(action)
-    console.log(signup.fulfilled)
     if (signup.fulfilled.match(action)) {
       toast.success("Signup successful!");
       setTimeout(() => {

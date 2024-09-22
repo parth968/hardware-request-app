@@ -114,7 +114,6 @@ exports.assignHardware = async (req, res) => {
 exports.detachHardware = async (req, res) => {
     try {
         const { requestId, qrCode } = req.body;
-        console.log(requestId, qrCode)
 
         // Find the hardware associated with the QR code
         const hardware = await Hardware.findOne({ qrCode });
@@ -122,14 +121,14 @@ exports.detachHardware = async (req, res) => {
             return res.status(404).json({ message: 'Hardware not found for the given QR code' });
         }
 
-        console.log(hardware)
+       
         // Find the request
         const request = await Request.findById(requestId).populate('hardwareId');
         if (!request) {
             return res.status(404).json({ message: 'Request not found' });
         }
 
-        console.log(request)
+      
         // Ensure the hardware matches the one assigned to the request
         if (hardware._id.toString() !== request.hardwareId._id.toString()) {
             return res.status(400).json({ message: 'This hardware is not assigned to the request' });

@@ -68,7 +68,7 @@ export const assignHardware = createAsyncThunk('requests/assignHardware', async 
 
 export const detachHardware = createAsyncThunk('requests/detachHardware', async ({ requestId, qrCode }, { rejectWithValue }) => {
   try {
-    console.log(requestId, qrCode)
+    
     const response = await api.post('/api/requests/detach', { requestId, qrCode });
     return response.data;
   } catch (error) {

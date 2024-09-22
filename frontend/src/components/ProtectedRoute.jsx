@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { jwtDecode } from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode";
 import { setUser, logout } from "../slice/authSlice";
 
 const ProtectedRoute = ({ role, children }) => {
@@ -15,13 +15,12 @@ const ProtectedRoute = ({ role, children }) => {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log("Decoded Token:", decodedToken);
 
         // Check if the token is expired
         if (decodedToken.exp * 1000 < Date.now()) {
           localStorage.removeItem("token");
           dispatch(logout()); // Logout if expired
-          navigate('/')
+          navigate("/");
         } else {
           dispatch(
             setUser({
@@ -35,11 +34,11 @@ const ProtectedRoute = ({ role, children }) => {
         console.error("Failed to decode token:", error);
         localStorage.removeItem("token");
         dispatch(logout()); // Logout if invalid
-        navigate('/')
+        navigate("/");
       }
     } else {
       dispatch(logout()); // Logout if no token
-      navigate('/')
+      navigate("/");
     }
   }, [dispatch]);
 
@@ -50,12 +49,12 @@ const ProtectedRoute = ({ role, children }) => {
 
   // Redirect if user role does not match the required role
   if (role && user.role !== role) {
-    console.log(
-      "Redirected through ProtectedRoute:",
-      user,
-      "Role:",
-      user.role
-    );
+    // console.log(
+    //   "Redirected through ProtectedRoute:",
+    //   user,
+    //   "Role:",
+    //   user.role
+    // );
     return <Navigate to="/" />;
   }
 
